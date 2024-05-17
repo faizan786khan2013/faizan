@@ -1,0 +1,279 @@
+                                 
+                                          KUBERNETS
+kubernetes__https://github.com/testuser97123
+kind: Pod 
+apiVersion: v1
+metadata: 
+  name: testpod1
+spec:
+  containers:
+    - name: c001
+      image: ubuntu
+      command: ["/bin/bash" , "-c" , "while true; do echo hello-faizan ; sleep ; done"]
+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
+
+
+    
+                                               Annotations
+kind:Pod
+apiVersion: v1
+metadata:
+  name: anno
+  annotations:
+       description: hello friends
+spec: 
+  containers: 
+    - name: c02
+      image: ubuntu
+      command ["/bin/bash" , "-c" , "while true; do echo hello-faizan ; sleep ; done"]
+
+                                               MULTIPLES CONTAINERSkind: Pod
+apiVersion: v1
+metadata:
+  name: testpod2
+spec:
+  containers:
+    - name: c002
+      image: ubuntu
+      command: ["/bin/bash" , "-c" , "while true; do echo hello-faiSAL ; sleep ; done"]
+    - name: c001
+      image: ubuntu
+      command: ["/bin/bash" , "-c" , "while true; do echo hello-faizan ; sleep ; done"]
+
+
+
+                                          
+                                              ENVIRONMENT VARIABLES IN PODS
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: environments
+spec:
+  containers:
+    - name: c0055889
+      image: ubuntu
+      command: ["/bin/bash" , "-c" , "while true; do echo hello-faizan; sleep; done"]
+      env:
+       - name: MYNAME
+         value: FAIZAN
+
+
+
+                                               POD WITH PORTS
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: testpod22
+spec:
+  containers:
+    - name: c22
+      image: httpd
+      ports:
+        - containerPort: 80
+  
+                                             LABELS SELECTOR
+
+kind: Pod
+apiVersion: v1
+metadata: 
+   name: delhipod
+   labels:
+      env: development
+      class: pods
+spec:
+   containers:
+      - name: c004
+        image: ubuntu
+        command: ["/bin/bash" , "-c" , "while true; do echo hello-faizan; sleep; done"]kind: Pod
+
+
+kind: Pod
+apiVersion: v1
+metadata: 
+   name: delhipod
+   labels:
+      env: development
+      class: pods
+      love: devops
+spec:
+   containers:
+      - name: c004
+        image: ubuntu
+        command: ["/bin/bash" , "-c" , "while true; do echo hello-faizan; sleep; done"]
+
+
+
+
+
+                                             NODE SELECTOR
+kind: Pod
+apiVersion: v1
+metadata: 
+   name: nodelabels
+   labels:
+      env: development
+spec:
+   containers:
+      - name: c004
+        image: ubuntu
+        command: ["/bin/bash" , "-c" , "while true; do echo hello-faizan ; sleep ; done"]
+   nodeSelector:
+       hardware: t2-medium
+                                        REPLICATION CONTROLLER
+
+
+kind: ReplicationController
+apiVersion: v1
+metadata:
+   name: myreplica
+spec:
+  replicas: 3
+  selector:
+    myname: faizan
+  template:
+    metadata:
+      name: testpod6
+      labels:
+        myname: faizan
+    spec:
+     containers:
+      - name: c00331
+        image: ubuntu
+        command: ["/bin/bash" , "-c" , "while true; do echo hello-faian; sleep; done"]
+
+
+
+                                            REPLICA SET
+
+kind: ReplicaSet
+apiVersion: apps/v1
+metadata:
+   name: myrs
+spec:
+  replicas: 2
+  selector:
+    matchExpressions:
+    - {key: myname, operator: In, values: [Boxer,Box,Big]}
+    - {key: env, operator: NotIn, values: [Production]}
+  template:
+    metadata:
+      name: testpod5
+      labels:
+        myname: Boxer
+    spec:
+       containers:
+         - name: c005
+           image: ubuntu
+           command: ["/bin/bash" , "-c" , "while true; do echo hello-faian; sleep; done"]
+
+
+
+
+
+
+
+               
+                                            CONTAINER TO CONTAINER COMMUNICATION
+kind: Pod
+apiVersion: v1
+metadata: 
+   name: testpod
+spec:
+     containers:
+         - name: c005
+           image: ubuntu
+           command: ["/bin/bash" , "-c" , "while true; do echo hello-faian; sleep; done"]
+         - name: c006
+           image: httpd
+           ports:
+              - containerPort: 80
+                                           TWO DIFFERENT PODS COMMUNICATION EACH OTHER
+sudo get update && apt -y install docker.io
+
+curl -Lo https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x .
+
+
+vi pod2.yml
+kind: Pod
+apiVersion: v1
+metadata: 
+   name: testpod1
+  spec:
+     containers:
+         - name: c005
+           image: nginx
+           Ports:
+              - containerPort: 80
+vi pod3.yml
+kind: Pod
+apiVersion: v1
+metadata: 
+   name: testpod4
+  spec:
+     containers:
+         - name: c007
+           image: httpd
+           Ports:
+              - containerPort: 80
+                                               cluster IP
+vi deployhttpd.yml
+kind: depolyment
+apiVersion: apps/v1
+metadata: 
+   name: mydeployments
+  spec:
+     replicas: 1
+     selector:
+       matchLabes:
+         name: deployment
+     template:
+        meatdata:
+           name:testpod8
+           labels:
+              name: deployment
+        spec:
+     containers:
+         - name: c005
+           image: httpd
+           Ports:
+              - containerPort: 80
+we create services
+vi service.yml
+kind: service
+apiVersion: v1
+metadata: 
+   name: demoservice
+spec:
+  ports:
+    - port: 80
+      targetport: 80
+
+  selector:
+      name: deployment
+  type: clusterIP
+                                       liveness
+
+kind: Pod
+apiVersion: v1
+metadata:
+   labels:
+      test: liveness
+   name: mylivenessprobe
+spec:
+  containers:
+         - name: liveness
+           image: ubuntu
+           args:
+           - /bin/sh
+           - -c
+           - touch /tmp/healthy; sleep 1000
+           livenessProbe:
+               exec:
+                 command:
+                 - cat
+                 - /tmp/healthy
+               initialDelaySeconds: 5
+               periodSeconds: 5
+               timeoutSeconds: 30
